@@ -18,6 +18,7 @@ venv/
 build/
 develop-eggs/
 dist/
+data_dir/
 downloads/
 eggs/
 .eggs/
