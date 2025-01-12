@@ -5,7 +5,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./dist:/var/lib/grafana/plugins/grafana-clickhouse-datasource
+      - ./dist/grafana-clickhouse-datasource:/var/lib/grafana/plugins/grafana-clickhouse-datasource
       - ./grafana/provisioning:/etc/grafana/provisioning
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:3000/login"]
