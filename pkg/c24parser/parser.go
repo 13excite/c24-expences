@@ -122,13 +122,13 @@ func (p *Parser) translateTransactionType(germanType string) string {
 	case "Abbuchung":
 		return "Debit"
 	case "Zinszahlung":
-		return "Interest Payment"
+		return "Interest"
 	case "Kartenzahlung":
-		return "Card Payment"
+		return "Card"
 	case "Pocket-Umbuchung":
-		return "Pocket Transfer"
+		return "Pocket"
 	case "SEPA-Überweisung":
-		return "SEPA Transfer"
+		return "SEPA"
 	default:
 		return germanType
 	}

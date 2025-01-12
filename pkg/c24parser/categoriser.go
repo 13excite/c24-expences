@@ -74,7 +74,7 @@ func translateSubcategory(germanSubcategory string) string {
 // sanitizeToSnakeCase removes spaces, special characters, and converts to snake_case
 func sanitizeToSnakeCase(input string) string {
 	// Replace spaces and special characters with underscores
-	re := regexp.MustCompile(`[\\s&/-]+`)
+	re := regexp.MustCompile(`[\s&/-]+`)
 	input = re.ReplaceAllString(input, "_")
 	// Remove all non-alphanumeric or underscore characters
 	input = regexp.MustCompile(`[^a-zA-Z0-9_]`).ReplaceAllString(input, "")
