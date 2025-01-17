@@ -1,3 +1,4 @@
+// package driver contains the code to connect to the ClickHouse server
 package driver
 
 import (

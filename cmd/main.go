@@ -1,17 +1,28 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
 	"github.com/13excite/c24-expences/pkg/c24parser"
+	"github.com/13excite/c24-expences/pkg/config"
 	"github.com/13excite/c24-expences/pkg/driver"
 	"github.com/13excite/c24-expences/pkg/models"
 )
 
 func main() {
+	configPath := flag.String("config", "", "path to the configuration file")
+	flag.Parse()
 
-	conn, err := driver.OpenDB("default", "", "localhost:9000", "default")
+	conf := config.Config{}
+	conf.Defaults()
+	if *configPath != "" {
+		conf.ReadConfigFile(*configPath)
+	}
+
+	conn, err := driver.OpenDB(conf.Clickhouse.Username,
+		conf.Clickhouse.Password, conf.Clickhouse.Address, conf.Clickhouse.Database)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

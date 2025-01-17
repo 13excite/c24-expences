@@ -1,3 +1,4 @@
+// package models contains the models for the application and the database connection.
 package models
 
 import (
