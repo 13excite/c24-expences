@@ -18,6 +18,9 @@ func TestTranslateTransactionType(t *testing.T) {
 		{"Kartenzahlung", "Card"},
 		{"Pocket-Umbuchung", "Pocket"},
 		{"SEPA-Überweisung", "SEPA"},
+		{"SEPA-Lastschrift", "SEPA_debit"},
+		{"Echtzeit-Überweisung", "Transfer"},
+		{"Online-Kartenzahlung", "Online"},
 		{"Unbekannter Typ", "Unbekannter Typ"},
 	}
 

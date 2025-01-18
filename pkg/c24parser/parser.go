@@ -85,7 +85,7 @@ func (p *Parser) ParseFile(filename string) error {
 			Amount:          amount,
 			Recipient:       recipient,
 			Usage:           row[6],
-			Category:        translateCategory(row[8]),
+			Category:        translateCategory(row[8], recipient),
 			Subcategory:     translateSubcategory(row[9]),
 		})
 
@@ -123,7 +123,9 @@ func (p *Parser) translateTransactionType(germanType string) string {
 	case "SEPA-Lastschrift":
 		return "SEPA_debit"
 	case "Echtzeit-Überweisung":
-		return "Instant_transfer"
+		return "Transfer"
+	case "Online-Kartenzahlung":
+		return "Online"
 	default:
 		return germanType
 	}
