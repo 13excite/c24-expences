@@ -9,6 +9,7 @@ env/
 venv/
 *.pdf
 *.csv
+coverage.txt
 
 # C extensions
 *.so

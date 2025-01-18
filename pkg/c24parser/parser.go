@@ -7,22 +7,13 @@ import (
 	"strconv"
 	"strings"
 	"time"
-)
 
-// Transaction struct that holds the transaction data
-type Transaction struct {
-	TransactionType string
-	Date            string
-	Amount          float64
-	Recipient       string
-	Usage           string
-	Category        string
-	Subcategory     string
-}
+	"github.com/13excite/c24-expences/pkg/models"
+)
 
 // Parser struct that holds the transactions and the CSV file
 type Parser struct {
-	transactions []Transaction
+	transactions []models.Transaction
 	file         *os.File
 	csvReader    *csv.Reader
 }
@@ -31,7 +22,7 @@ type Parser struct {
 func NewParser() *Parser {
 	return &Parser{
 		// Initialize the slice with length 0
-		transactions: make([]Transaction, 0),
+		transactions: make([]models.Transaction, 0),
 	}
 }
 
@@ -88,13 +79,13 @@ func (p *Parser) ParseFile(filename string) error {
 			recipient = row[3]
 		}
 
-		p.transactions = append(p.transactions, Transaction{
+		p.transactions = append(p.transactions, models.Transaction{
 			TransactionType: p.translateTransactionType(row[0]),
 			Date:            date,
 			Amount:          amount,
 			Recipient:       recipient,
 			Usage:           row[6],
-			Category:        translateCategory(row[8]),
+			Category:        translateCategory(row[8], recipient),
 			Subcategory:     translateSubcategory(row[9]),
 		})
 
@@ -112,7 +103,7 @@ func (p *Parser) parseDate(dateStr string) (string, error) {
 }
 
 // GetTransactions returns the parsed transactions
-func (p *Parser) GetTransactions() []Transaction {
+func (p *Parser) GetTransactions() []models.Transaction {
 	return p.transactions
 }
 
@@ -122,13 +113,19 @@ func (p *Parser) translateTransactionType(germanType string) string {
 	case "Abbuchung":
 		return "Debit"
 	case "Zinszahlung":
-		return "Interest Payment"
+		return "Interest"
 	case "Kartenzahlung":
-		return "Card Payment"
+		return "Card"
 	case "Pocket-Umbuchung":
-		return "Pocket Transfer"
+		return "Pocket"
 	case "SEPA-Überweisung":
-		return "SEPA Transfer"
+		return "SEPA"
+	case "SEPA-Lastschrift":
+		return "SEPA_debit"
+	case "Echtzeit-Überweisung":
+		return "Transfer"
+	case "Online-Kartenzahlung":
+		return "Online"
 	default:
 		return germanType
 	}
