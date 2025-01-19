@@ -35,6 +35,12 @@ type Transaction struct {
 	Subcategory     string
 }
 
+// SHAFile struct that holds the path and sha of a file for preventing duplicate uploads
+type SHAFile struct {
+	Path   string
+	SHA256 string
+}
+
 // InsertTransaction inserts a new txn and returns its id
 func (m *DBModel) InsertTransaction(txn Transaction) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -49,6 +55,26 @@ func (m *DBModel) InsertTransaction(txn Transaction) error {
 	_, err := m.DB.ExecContext(ctx, stmt,
 		txn.TransactionType, txn.Date, txn.Recipient,
 		txn.Amount, txn.Category, txn.Subcategory,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *DBModel) InsertSHAFile(shaFile SHAFile) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+		INSERT INTO file_hashes
+			(path, sha256)
+		VALUES (?, ?)
+		`
+	_, err := s.DB.ExecContext(ctx, stmt,
+		shaFile.Path, shaFile.SHA256,
 	)
 
 	if err != nil {

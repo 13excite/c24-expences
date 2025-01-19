@@ -28,6 +28,8 @@ func translateCategory(germanCategory, recipient string) string {
 		return "Savings"
 	case "Versicherungen":
 		return "Insurance"
+	// if category is "Weitere Ausgaben" categorise based on recipient
+	// to get more specific category
 	case "Weitere Ausgaben":
 		return advancedCategoriser(recipient)
 	case "Weitere Einnahmen":
@@ -41,6 +43,7 @@ func translateCategory(germanCategory, recipient string) string {
 	}
 }
 
+// advancedCategoriser categorises based on the recipient
 func advancedCategoriser(recipient string) string {
 	if strings.Contains(recipient, "Espresso House") {
 		return "Restaurant_Cafe"
