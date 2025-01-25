@@ -29,7 +29,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	model := models.NewModels(conn)
+	model := models.NewModel(conn)
 
 	csvParser := c24parser.NewParser()
 	if err := csvParser.ParseFile("input/transaction_12_24.csv"); err != nil {

@@ -13,13 +13,13 @@ type DBModel struct {
 }
 
 // Models is the wrapper for all models
-type Models struct {
+type Model struct {
 	DB DBModel
 }
 
 // NewModels returns a model type with database connection pool
-func NewModels(db *sql.DB) Models {
-	return Models{
+func NewModel(db *sql.DB) Model {
+	return Model{
 		DB: DBModel{DB: db},
 	}
 }
@@ -62,6 +62,35 @@ func (m *DBModel) InsertTransaction(txn Transaction) error {
 	}
 
 	return nil
+}
+
+func (s *DBModel) GetSHAFiles() ([]SHAFile, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `SELECT path, sha256 FROM file_hashes`
+
+	rows, err := s.DB.QueryContext(ctx, stmt)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var shaFiles []SHAFile
+	for rows.Next() {
+		var shaFile SHAFile
+		err := rows.Scan(&shaFile.Path, &shaFile.SHA256)
+		if err != nil {
+			return nil, err
+		}
+		shaFiles = append(shaFiles, shaFile)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return shaFiles, nil
 }
 
 func (s *DBModel) InsertSHAFile(shaFile SHAFile) error {
