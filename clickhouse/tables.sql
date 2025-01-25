@@ -10,3 +10,10 @@ CREATE TABLE IF NOT EXISTS transactions (
 )
 ENGINE = MergeTree
 PRIMARY KEY (date, recipient, kind, amount);
+
+
+CREATE TABLE IF NOT EXISTS file_hashes (
+    path String,
+    sha256 String
+) ENGINE = MergeTree()
+ORDER BY path;
