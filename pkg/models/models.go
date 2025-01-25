@@ -13,13 +13,13 @@ type DBModel struct {
 }
 
 // Models is the wrapper for all models
-type Models struct {
+type Model struct {
 	DB DBModel
 }
 
 // NewModels returns a model type with database connection pool
-func NewModels(db *sql.DB) Models {
-	return Models{
+func NewModel(db *sql.DB) Model {
+	return Model{
 		DB: DBModel{DB: db},
 	}
 }
@@ -33,6 +33,12 @@ type Transaction struct {
 	Usage           string
 	Category        string
 	Subcategory     string
+}
+
+// SHAFile struct that holds the path and sha of a file for preventing duplicate uploads
+type SHAFile struct {
+	Path   string
+	SHA256 string
 }
 
 // InsertTransaction inserts a new txn and returns its id
@@ -49,6 +55,55 @@ func (m *DBModel) InsertTransaction(txn Transaction) error {
 	_, err := m.DB.ExecContext(ctx, stmt,
 		txn.TransactionType, txn.Date, txn.Recipient,
 		txn.Amount, txn.Category, txn.Subcategory,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *DBModel) GetSHAFiles() ([]SHAFile, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `SELECT path, sha256 FROM file_hashes`
+
+	rows, err := s.DB.QueryContext(ctx, stmt)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var shaFiles []SHAFile
+	for rows.Next() {
+		var shaFile SHAFile
+		err := rows.Scan(&shaFile.Path, &shaFile.SHA256)
+		if err != nil {
+			return nil, err
+		}
+		shaFiles = append(shaFiles, shaFile)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return shaFiles, nil
+}
+
+func (s *DBModel) InsertSHAFile(shaFile SHAFile) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+		INSERT INTO file_hashes
+			(path, sha256)
+		VALUES (?, ?)
+		`
+	_, err := s.DB.ExecContext(ctx, stmt,
+		shaFile.Path, shaFile.SHA256,
 	)
 
 	if err != nil {
