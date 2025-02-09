@@ -8,6 +8,7 @@ import (
 	"github.com/13excite/c24-expences/pkg/c24parser"
 	"github.com/13excite/c24-expences/pkg/config"
 	"github.com/13excite/c24-expences/pkg/driver"
+	"github.com/13excite/c24-expences/pkg/filemanager"
 	"github.com/13excite/c24-expences/pkg/models"
 )
 
@@ -30,6 +31,20 @@ func main() {
 	defer conn.Close()
 
 	model := models.NewModel(conn)
+
+	fileMgr := filemanager.NewFileManager("./imput/", model.DB)
+	files, err := fileMgr.GetFilesToUpload()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for _, file := range files {
+		fmt.Println(file)
+	}
+
+	os.Exit(0)
+	return
 
 	csvParser := c24parser.NewParser()
 	if err := csvParser.ParseFile("input/transaction_12_24.csv"); err != nil {

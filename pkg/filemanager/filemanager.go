@@ -50,7 +50,9 @@ func (f *FileManager) deduplicateFiles() error {
 			return err
 		}
 		if !f.containsSHA256(processedFiles, sha256) {
-			f.deduplicatedFiles = append(f.deduplicatedFiles, models.SHAFile{Path: file, SHA256: sha256})
+			shaFile := models.SHAFile{Path: file, SHA256: sha256}
+			f.DB.InsertSHAFile(shaFile)
+			f.deduplicatedFiles = append(f.deduplicatedFiles, shaFile)
 		}
 	}
 	return nil
