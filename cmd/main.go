@@ -32,32 +32,27 @@ func main() {
 
 	model := models.NewModel(conn)
 
-	fileMgr := filemanager.NewFileManager("./imput/", model.DB)
+	fileMgr := filemanager.NewFileManager("./input/", &model.DB)
 	files, err := fileMgr.GetFilesToUpload()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	for _, file := range files {
-		fmt.Println(file)
-	}
-
-	os.Exit(0)
-	return
-
 	csvParser := c24parser.NewParser()
-	if err := csvParser.ParseFile("input/transaction_12_24.csv"); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	fmt.Println("Transactions:")
-	for _, t := range csvParser.GetTransactions() {
-		err := model.DB.InsertTransaction(t)
-		if err != nil {
+	for _, file := range files {
+		if err := csvParser.ParseFile(file.Path); err != nil {
 			fmt.Println(err)
 			continue
 		}
+		fmt.Println("Starts to create transaction:")
+		for _, t := range csvParser.GetTransactions() {
+			err := model.DB.InsertTransaction(t)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+		}
 	}
+
 }

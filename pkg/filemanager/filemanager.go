@@ -10,16 +10,22 @@ import (
 	"github.com/13excite/c24-expences/pkg/models"
 )
 
+// DBModel is the interface for the database model
+type DBModel interface {
+	GetSHAFiles() ([]models.SHAFile, error)
+	InsertSHAFile(models.SHAFile) error
+}
+
 // FileManager struct that holds the folder path and the files
 type FileManager struct {
 	folderPath        string
 	initFiles         []string
 	deduplicatedFiles []models.SHAFile
-	DB                models.DBModel
+	DB                DBModel
 }
 
 // NewFileManager returns a new FileManager struct
-func NewFileManager(folderPath string, db models.DBModel) *FileManager {
+func NewFileManager(folderPath string, db DBModel) *FileManager {
 	return &FileManager{
 		folderPath:        folderPath,
 		initFiles:         make([]string, 0),
@@ -28,6 +34,7 @@ func NewFileManager(folderPath string, db models.DBModel) *FileManager {
 	}
 }
 
+// GetFilesToUpload returns the files that are not uploaded to database yet
 func (f *FileManager) GetFilesToUpload() ([]models.SHAFile, error) {
 	if err := f.deduplicateFiles(); err != nil {
 		return nil, err
