@@ -1,3 +1,5 @@
+// Package filemanager provides the functionality to find files in a given directory
+// and calculate their SHA256 hashes. It then checks if the hash is already in the database
 package filemanager
 
 import (
@@ -42,6 +44,9 @@ func (f *FileManager) GetFilesToUpload() ([]models.SHAFile, error) {
 	return f.deduplicatedFiles, nil
 }
 
+// deduplicateFiles finds the files in the given directory and calculates
+// their SHA256 hashes. It then checks if the hash is already in the database
+// and if not, adds the file to the list of files to be uploaded.
 func (f *FileManager) deduplicateFiles() error {
 	if err := f.findFiles(); err != nil {
 		return err
@@ -94,9 +99,9 @@ func (f *FileManager) calculateSHA256(filePath string) (string, error) {
 		return "", err
 	}
 	return hex.EncodeToString(hasher.Sum(nil)), nil
-
 }
 
+// containsSHA256 checks if the given SHA256 hash is in the list of files.
 func (f *FileManager) containsSHA256(files []models.SHAFile, sha256 string) bool {
 	for _, file := range files {
 		if file.SHA256 == sha256 {

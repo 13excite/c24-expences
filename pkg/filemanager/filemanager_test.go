@@ -1,6 +1,7 @@
 package filemanager
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -110,24 +111,25 @@ func TestCalculateSHA256(t *testing.T) {
 }
 
 func TestDeduplicateFiles(t *testing.T) {
-	// Create a tmp dir for testing
+	// Create a tmp dir and some test files
 	tempDir := t.TempDir()
-
 	testFiles := []string{
 		filepath.Join(tempDir, "file1.csv"),
 		filepath.Join(tempDir, "file2.csv"),
 	}
-
-	for _, file := range testFiles {
+	// Insert different content in each file for deduplication testing
+	for id, file := range testFiles {
 		err := os.MkdirAll(filepath.Dir(file), 0755)
 		assert.NoError(t, err)
-		err = os.WriteFile(file, []byte("Hello, World!"), 0644)
+		err = os.WriteFile(file, []byte(fmt.Sprintf("Hello world! %d", id)), 0644)
 		assert.NoError(t, err)
 	}
 
-	// Initialize MockDBModel
 	mockDB := new(MockDBModel)
-	mockDB.On("GetSHAFiles").Return([]models.SHAFile{}, nil)
+	// Mock GetSHAFiles which returns only the sha of the first file from testFiles
+	mockDB.On("GetSHAFiles").Return([]models.SHAFile{
+		{Path: testFiles[0], SHA256: "da4c7b8c51c37968d81234cc51acd72553ba6ee9b5963546a95ba5977844aa39"},
+	}, nil)
 	mockDB.On("InsertSHAFile", mock.Anything).Return(nil)
 
 	fileManager := NewFileManager(tempDir, mockDB)
@@ -136,13 +138,24 @@ func TestDeduplicateFiles(t *testing.T) {
 	err := fileManager.deduplicateFiles()
 	assert.NoError(t, err)
 
-	// Check if all files are deduplicated
-	assert.Len(t, fileManager.deduplicatedFiles, len(testFiles))
+	// Check deduplicatedFiles and make sure only the second file is present
+	assert.Len(t, fileManager.deduplicatedFiles, len(testFiles)-1)
 
-	// Verify that InsertSHAFile was called for each file
-	for _, file := range testFiles {
-		sha256, err := fileManager.calculateSHA256(file)
-		assert.NoError(t, err)
-		mockDB.AssertCalled(t, "InsertSHAFile", models.SHAFile{Path: file, SHA256: sha256})
-	}
+	// Verify that InsertSHAFile was called for path testFiles[1]
+	sha256, err := fileManager.calculateSHA256(testFiles[1])
+	assert.NoError(t, err)
+	mockDB.AssertCalled(t, "InsertSHAFile", models.SHAFile{Path: testFiles[1], SHA256: sha256})
+
+	// and was not called for path testFiles[0]
+	sha256, err = fileManager.calculateSHA256(testFiles[0])
+	assert.NoError(t, err)
+	mockDB.AssertNotCalled(t, "InsertSHAFile", models.SHAFile{Path: testFiles[0], SHA256: sha256})
+
+	// Test error case from DB
+	errorMockDB := new(MockDBModel)
+	errorMockDB.On("GetSHAFiles").Return([]models.SHAFile{}, fmt.Errorf("db error"))
+	errorMockDB.On("InsertSHAFile", mock.Anything).Return(nil)
+	fileManager = NewFileManager(tempDir, errorMockDB)
+	err = fileManager.deduplicateFiles()
+	assert.Error(t, err)
 }
