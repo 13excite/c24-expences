@@ -11,9 +11,12 @@ import (
 
 // Config is the main config of the service
 type Config struct {
-	InputDir   string           `yaml:"input_dir"`
-	RunEvery   int              `yaml:"run_every"` // in hours
-	Clickhouse ClickhouseConfig `yaml:"clickhouse"`
+	InputDir    string           `yaml:"input_dir"`
+	RunEvery    int              `yaml:"run_every"`    // in minutes
+	MetricsPort int              `yaml:"metrics_port"` // for prometheus in future
+	LogLevel    string           `yaml:"log_level"`
+	LogEncoding string           `yaml:"log_encoding"`
+	Clickhouse  ClickhouseConfig `yaml:"clickhouse"`
 }
 
 // ClickhouseConfig contains the configuration for the Clickhouse database
