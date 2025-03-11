@@ -44,6 +44,7 @@ func translateCategory(germanCategory, recipient string) string {
 }
 
 // advancedCategoriser categorises based on the recipient
+// CHANGE IT IF YOU WANT TO ADD MORE CATEGORIES
 func advancedCategoriser(recipient string) string {
 	if strings.Contains(recipient, "Espresso House") {
 		return "Restaurant_Cafe"
