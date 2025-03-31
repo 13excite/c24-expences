@@ -47,7 +47,7 @@ func (j *Job) parserRunner() {
 
 	model := models.NewModel(conn)
 
-	fileMgr := filemanager.NewFileManager("./input/", &model.DB)
+	fileMgr := filemanager.NewFileManager(j.config.InputDir, &model.DB)
 	files, err := fileMgr.GetFilesToUpload()
 	if err != nil {
 		j.logger.Error("Error getting files to upload", zap.Error(err))
@@ -73,7 +73,7 @@ func (j *Job) parserRunner() {
 
 // RunBackgroundParseJob runs the background job that parses the CSV files
 func (j *Job) RunBackgroundParseJob(ctx context.Context) error {
-	j.logger.Info("Background ParseFileJob is starting....")
+	j.logger.Info("Background ParseFileJob is starting with run every", j.config.RunEvery)
 
 	ticker := time.NewTicker(time.Duration(j.config.RunEvery) * time.Minute)
 

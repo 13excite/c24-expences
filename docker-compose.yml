@@ -1,7 +1,7 @@
 services:
   grafana:
     container_name: grafana
-    image: grafana/grafana:${GRAFANA_VERSION:-11.3.0}
+    image: grafana/grafana:${GRAFANA_VERSION:-11.4.3}
     ports:
       - 3000:3000
     volumes:
