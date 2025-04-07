@@ -1,8 +1,8 @@
 module github.com/13excite/c24-expense
 
-go 1.22
+go 1.22.0
 
-toolchain go1.22
+toolchain go1.22.2
 
 require (
 	github.com/ClickHouse/clickhouse-go/v2 v2.30.0

@@ -20,7 +20,7 @@ BUILD_DATE	= $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 SRC = $(shell find . -type f -name '*.go' -not -path "./vendor/*")
 
 # golangci-lint config
-golangci_lint_version=latest
+golangci_lint_version=v1.64.8
 vols=-v `pwd`:/app -w /app
 run_lint=docker run --rm $(vols) golangci/golangci-lint:$(golangci_lint_version)
 
