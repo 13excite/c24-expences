@@ -1,6 +1,6 @@
 module github.com/13excite/c24-expense
 
-go 1.22.2
+go 1.22
 
 require (
 	github.com/ClickHouse/ch-go v0.63.1 // indirect
