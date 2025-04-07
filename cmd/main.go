@@ -1,3 +1,4 @@
+// Package main is the entry point for the c24-expense application.
 package main
 
 import (
@@ -5,11 +6,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/13excite/c24-expences/pkg/c24parser"
-	"github.com/13excite/c24-expences/pkg/config"
-	"github.com/13excite/c24-expences/pkg/driver"
-	"github.com/13excite/c24-expences/pkg/filemanager"
-	"github.com/13excite/c24-expences/pkg/models"
+	"github.com/13excite/c24-expense/pkg/c24parser"
+	"github.com/13excite/c24-expense/pkg/config"
+	"github.com/13excite/c24-expense/pkg/driver"
+	"github.com/13excite/c24-expense/pkg/filemanager"
+	"github.com/13excite/c24-expense/pkg/models"
 )
 
 func main() {
@@ -54,5 +55,4 @@ func main() {
 			}
 		}
 	}
-
 }

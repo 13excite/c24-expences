@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/13excite/c24-expences/pkg/models"
+	"github.com/13excite/c24-expense/pkg/models"
 )
 
 // Parser struct that holds the transactions and the CSV file
@@ -88,7 +88,6 @@ func (p *Parser) ParseFile(filename string) error {
 			Category:        translateCategory(row[8], recipient),
 			Subcategory:     translateSubcategory(row[9]),
 		})
-
 	}
 	return nil
 }

@@ -8,11 +8,11 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/13excite/c24-expences/pkg/c24parser"
-	"github.com/13excite/c24-expences/pkg/config"
-	"github.com/13excite/c24-expences/pkg/driver"
-	"github.com/13excite/c24-expences/pkg/filemanager"
-	"github.com/13excite/c24-expences/pkg/models"
+	"github.com/13excite/c24-expense/pkg/c24parser"
+	"github.com/13excite/c24-expense/pkg/config"
+	"github.com/13excite/c24-expense/pkg/driver"
+	"github.com/13excite/c24-expense/pkg/filemanager"
+	"github.com/13excite/c24-expense/pkg/models"
 )
 
 type parser interface {

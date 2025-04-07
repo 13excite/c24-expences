@@ -1,4 +1,4 @@
-module github.com/13excite/c24-expences
+module github.com/13excite/c24-expense
 
 go 1.22.2
 

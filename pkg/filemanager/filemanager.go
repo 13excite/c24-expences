@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/13excite/c24-expences/pkg/models"
+	"github.com/13excite/c24-expense/pkg/models"
 )
 
 // DBModel is the interface for the database model
@@ -87,7 +87,6 @@ func (f *FileManager) findFiles() error {
 
 // CalculateSHA256 computes the SHA256 hash of a given file.
 func (f *FileManager) calculateSHA256(filePath string) (string, error) {
-
 	file, err := os.Open(filePath)
 	if err != nil {
 		return "", err

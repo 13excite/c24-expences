@@ -60,7 +60,7 @@ func TestTranslateSubcategory(t *testing.T) {
 		{"Sport Shop", "Sports_shop"},
 		{"Steuern und Abgaben", "Taxes_and_fees"},
 		{"Strom", "Electricity"},
-		{"Supermarkt", "Supermarket"},
+		{"Supermarkt", "Supermarket"}, // nolint:all
 		{"Umbuchung", "Saving"},
 		{"Weitere Ausgaben", "Other_expenses"},
 		{"Weitere Einnahmen", "Other_income"},

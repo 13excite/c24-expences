@@ -4,7 +4,7 @@ package logger
 import (
 	"fmt"
 
-	"github.com/13excite/c24-expences/pkg/config"
+	"github.com/13excite/c24-expense/pkg/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
