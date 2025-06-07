@@ -1,7 +1,7 @@
 services:
   grafana:
     container_name: grafana
-    image: grafana/grafana:${GRAFANA_VERSION:-11.4.3}
+    image: grafana/grafana:${GRAFANA_VERSION:-11.5.5}
     ports:
       - 3000:3000
     volumes:
@@ -50,6 +50,20 @@ services:
     restart: on-failure
     volumes:
       - ./clickhouse/tables.sql:/dev/shm/tables.sql
+    networks:
+      - grafana
+
+  c24-parser:
+    image: c24-expences:test
+    container_name: c24-parser
+    depends_on:
+      clickhouse-server:
+        condition: service_healthy
+    restart: on-failure
+    volumes:
+      - ./input:/input
+      - ./config.yaml:/etc/config.yaml
+    command: sh -c "exec /usr/local/bin/c24-expences -config /etc/config.yaml"
     networks:
       - grafana
 
