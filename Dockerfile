@@ -17,7 +17,7 @@ RUN make build
 
 # actual image
 FROM alpine:${ALPINE_VER}
-ARG BINARY_NAME=c24-parser
+ARG BINARY_NAME=c24-expences
 
 # ARG can't be used in CMD, but ENV can
 ENV BINARY_NAME=${BINARY_NAME}

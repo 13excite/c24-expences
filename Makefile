@@ -8,7 +8,7 @@ GRAFANA_CH_DS_URL="https://github.com/grafana/clickhouse-datasource/releases/dow
 
 # constant variables
 PROJECT_NAME	= c24-expences
-BINARY_NAM	= c24-expences
+BINARY_NAME	= c24-expences
 GIT_COMMIT	= $(shell git rev-parse HEAD)
 BINARY_TAR_DIR	= $(BINARY_NAME)-$(GIT_COMMIT)
 BINARY_TAR_FILE	= $(BINARY_TAR_DIR).tar.gz
@@ -40,8 +40,12 @@ lint:
 	@printf "$(OK_COLOR)==> Running golang-ci-linter via Docker$(NO_COLOR)\n"
 	@$(run_lint) golangci-lint run --timeout=5m --verbose
 #
-# Build: TODO
-#
+
+## build: test compile the binary for the local machine
+build:
+	@echo 'compiling binary...'
+	@cd cmd/ && CGO_ENABLED=0 go build -o ../$(BINARY_NAME)
+
 
 ## setup: install dependencies and setup the project
 setup:
