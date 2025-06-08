@@ -1,3 +1,5 @@
+// Package c24parser provides functions to categorize transactions
+// and subcategories from the C24 CSV file.
 package c24parser
 
 import (
@@ -44,6 +46,7 @@ func translateCategory(germanCategory, recipient string) string {
 }
 
 // advancedCategoriser categorises based on the recipient
+// CHANGE IT IF YOU WANT TO ADD MORE CATEGORIES
 func advancedCategoriser(recipient string) string {
 	if strings.Contains(recipient, "Espresso House") {
 		return "Restaurant_Cafe"
@@ -88,7 +91,7 @@ func translateSubcategory(germanSubcategory string) string {
 		"Sport Shop":                   "Sports_shop",
 		"Steuern und Abgaben":          "Taxes_and_fees",
 		"Strom":                        "Electricity",
-		"Supermarkt":                   "Supermarket",
+		"Supermarkt":                   "Supermarket", // nolint:all
 		"Umbuchung":                    "Saving",
 		"Weitere Ausgaben":             "Other_expenses",
 		"Weitere Einnahmen":            "Other_income",

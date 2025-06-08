@@ -1,3 +1,4 @@
+// Package main is the entry point for the c24-expense application.
 package main
 
 import (
@@ -5,10 +6,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/13excite/c24-expences/pkg/c24parser"
-	"github.com/13excite/c24-expences/pkg/config"
-	"github.com/13excite/c24-expences/pkg/driver"
-	"github.com/13excite/c24-expences/pkg/models"
+	"github.com/13excite/c24-expense/pkg/c24parser"
+	"github.com/13excite/c24-expense/pkg/config"
+	"github.com/13excite/c24-expense/pkg/driver"
+	"github.com/13excite/c24-expense/pkg/filemanager"
+	"github.com/13excite/c24-expense/pkg/models"
 )
 
 func main() {
@@ -31,18 +33,26 @@ func main() {
 
 	model := models.NewModel(conn)
 
-	csvParser := c24parser.NewParser()
-	if err := csvParser.ParseFile("input/transaction_12_24.csv"); err != nil {
+	fileMgr := filemanager.NewFileManager("./input/", &model.DB)
+	files, err := fileMgr.GetFilesToUpload()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Transactions:")
-	for _, t := range csvParser.GetTransactions() {
-		err := model.DB.InsertTransaction(t)
-		if err != nil {
+	csvParser := c24parser.NewParser()
+	for _, file := range files {
+		if err := csvParser.ParseFile(file.Path); err != nil {
 			fmt.Println(err)
 			continue
+		}
+		fmt.Println("Starts to create transaction:")
+		for _, t := range csvParser.GetTransactions() {
+			err := model.DB.InsertTransaction(t)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
 		}
 	}
 }

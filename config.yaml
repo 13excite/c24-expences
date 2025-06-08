@@ -1,0 +1,9 @@
+input_dir: '/input'
+run_every: 24
+log_level: 'info'
+clickhouse:
+  address: 'clickhouse-server:9000'
+  database: default
+  user: default
+  password: ''
+  timeout: 5

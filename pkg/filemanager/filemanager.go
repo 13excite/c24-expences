@@ -1,3 +1,5 @@
+// Package filemanager provides the functionality to find files in a given directory
+// and calculate their SHA256 hashes. It then checks if the hash is already in the database
 package filemanager
 
 import (
@@ -7,19 +9,25 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/13excite/c24-expences/pkg/models"
+	"github.com/13excite/c24-expense/pkg/models"
 )
+
+// DBModel is the interface for the database model
+type DBModel interface {
+	GetSHAFiles() ([]models.SHAFile, error)
+	InsertSHAFile(models.SHAFile) error
+}
 
 // FileManager struct that holds the folder path and the files
 type FileManager struct {
 	folderPath        string
 	initFiles         []string
 	deduplicatedFiles []models.SHAFile
-	DB                models.DBModel
+	DB                DBModel
 }
 
 // NewFileManager returns a new FileManager struct
-func NewFileManager(folderPath string, db models.DBModel) *FileManager {
+func NewFileManager(folderPath string, db DBModel) *FileManager {
 	return &FileManager{
 		folderPath:        folderPath,
 		initFiles:         make([]string, 0),
@@ -28,6 +36,7 @@ func NewFileManager(folderPath string, db models.DBModel) *FileManager {
 	}
 }
 
+// GetFilesToUpload returns the files that are not uploaded to database yet
 func (f *FileManager) GetFilesToUpload() ([]models.SHAFile, error) {
 	if err := f.deduplicateFiles(); err != nil {
 		return nil, err
@@ -35,6 +44,9 @@ func (f *FileManager) GetFilesToUpload() ([]models.SHAFile, error) {
 	return f.deduplicatedFiles, nil
 }
 
+// deduplicateFiles finds the files in the given directory and calculates
+// their SHA256 hashes. It then checks if the hash is already in the database
+// and if not, adds the file to the list of files to be uploaded.
 func (f *FileManager) deduplicateFiles() error {
 	if err := f.findFiles(); err != nil {
 		return err
@@ -50,7 +62,9 @@ func (f *FileManager) deduplicateFiles() error {
 			return err
 		}
 		if !f.containsSHA256(processedFiles, sha256) {
-			f.deduplicatedFiles = append(f.deduplicatedFiles, models.SHAFile{Path: file, SHA256: sha256})
+			shaFile := models.SHAFile{Path: file, SHA256: sha256}
+			f.DB.InsertSHAFile(shaFile)
+			f.deduplicatedFiles = append(f.deduplicatedFiles, shaFile)
 		}
 	}
 	return nil
@@ -73,7 +87,6 @@ func (f *FileManager) findFiles() error {
 
 // CalculateSHA256 computes the SHA256 hash of a given file.
 func (f *FileManager) calculateSHA256(filePath string) (string, error) {
-
 	file, err := os.Open(filePath)
 	if err != nil {
 		return "", err
@@ -85,9 +98,9 @@ func (f *FileManager) calculateSHA256(filePath string) (string, error) {
 		return "", err
 	}
 	return hex.EncodeToString(hasher.Sum(nil)), nil
-
 }
 
+// containsSHA256 checks if the given SHA256 hash is in the list of files.
 func (f *FileManager) containsSHA256(files []models.SHAFile, sha256 string) bool {
 	for _, file := range files {
 		if file.SHA256 == sha256 {

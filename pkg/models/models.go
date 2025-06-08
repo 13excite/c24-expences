@@ -1,4 +1,4 @@
-// package models contains the models for the application and the database connection.
+// Package models contains the models for the application and the database connection.
 package models
 
 import (
@@ -12,12 +12,12 @@ type DBModel struct {
 	DB *sql.DB
 }
 
-// Models is the wrapper for all models
+// Model is the wrapper for all models
 type Model struct {
 	DB DBModel
 }
 
-// NewModels returns a model type with database connection pool
+// NewModel returns a model type with database connection pool
 func NewModel(db *sql.DB) Model {
 	return Model{
 		DB: DBModel{DB: db},
@@ -64,13 +64,14 @@ func (m *DBModel) InsertTransaction(txn Transaction) error {
 	return nil
 }
 
-func (s *DBModel) GetSHAFiles() ([]SHAFile, error) {
+// GetSHAFiles retrieves all SHA files from the database
+func (m *DBModel) GetSHAFiles() ([]SHAFile, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	stmt := `SELECT path, sha256 FROM file_hashes`
 
-	rows, err := s.DB.QueryContext(ctx, stmt)
+	rows, err := m.DB.QueryContext(ctx, stmt)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,8 @@ func (s *DBModel) GetSHAFiles() ([]SHAFile, error) {
 	return shaFiles, nil
 }
 
-func (s *DBModel) InsertSHAFile(shaFile SHAFile) error {
+// InsertSHAFile inserts a new SHA file into the database
+func (m *DBModel) InsertSHAFile(shaFile SHAFile) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -102,7 +104,7 @@ func (s *DBModel) InsertSHAFile(shaFile SHAFile) error {
 			(path, sha256)
 		VALUES (?, ?)
 		`
-	_, err := s.DB.ExecContext(ctx, stmt,
+	_, err := m.DB.ExecContext(ctx, stmt,
 		shaFile.Path, shaFile.SHA256,
 	)
 

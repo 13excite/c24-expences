@@ -1,4 +1,4 @@
-// package driver contains the code to connect to the ClickHouse server
+// Package driver contains the code to connect to the ClickHouse server
 package driver
 
 import (
@@ -9,6 +9,7 @@ import (
 	"github.com/ClickHouse/clickhouse-go/v2"
 )
 
+// OpenDB opens a connection to the ClickHouse database
 func OpenDB(user, password, addr, database string) (*sql.DB, error) {
 	// Connect to the ClickHouse server
 	db := clickhouse.OpenDB(&clickhouse.Options{
@@ -30,9 +31,3 @@ func OpenDB(user, password, addr, database string) (*sql.DB, error) {
 
 	return db, nil
 }
-
-// Auth: clickhouse.Auth{
-// 	Database: "default", // Default database
-// 	Username: "default", // Default username
-// 	Password: "",        // Default password (if any)
-// },
