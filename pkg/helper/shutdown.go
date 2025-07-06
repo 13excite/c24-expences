@@ -9,6 +9,8 @@ import (
 	"syscall"
 )
 
+// WaitForShutdown listens for system signals (SIGINT, SIGTERM) and waits for
+// the context to be cancelled.
 func WaitForShutdown(ctx context.Context) {
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)

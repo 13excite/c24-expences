@@ -15,9 +15,9 @@ import (
 	"github.com/13excite/c24-expense/pkg/models"
 )
 
-type parser interface {
-	ParseFile(string) error
-}
+// type parser interface {
+// 	ParseFile(string) error
+// }
 
 // Job struct that holds the logger, parser and configuration of the job
 type Job struct {
