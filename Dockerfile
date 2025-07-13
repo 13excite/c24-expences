@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:experimental
 
-ARG GOLANG_VER=1.22.2
+ARG GOLANG_VER=1.23.10
 ARG ALPINE_VER=3.20.6
 
 # Builder image

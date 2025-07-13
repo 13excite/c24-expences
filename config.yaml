@@ -1,6 +1,6 @@
 input_dir: '/input'
-run_every: 24
-log_level: 'info'
+run_every: 1
+log_level: 'debug'
 clickhouse:
   address: 'clickhouse-server:9000'
   database: default

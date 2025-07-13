@@ -32,6 +32,8 @@ type ClickhouseConfig struct {
 func (conf *Config) Defaults() {
 	conf.InputDir = "./input"
 	conf.RunEvery = 24
+	conf.LogLevel = "info"
+	conf.LogEncoding = "console"
 	conf.Clickhouse = ClickhouseConfig{
 		Address:  "localhost:9000",
 		Database: "default",

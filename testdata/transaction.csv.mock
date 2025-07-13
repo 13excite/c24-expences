@@ -1,0 +1,57 @@
+﻿Transaktionstyp,Buchungsdatum,Betrag,Zahlungsempfänger,IBAN,BIC,Verwendungszweck,Beschreibung,Kategorie,Unterkategorie
+Zinszahlung,28.02.2025,"100,99",C24 Bank,,,,,Einkommen,Kapitalerträge
+Kartenzahlung,01.03.2025,"-9,99",SuperCafe,,,,,Restaurant/ Café/ Bar,Restaurant/ Café/ Bar
+Kartenzahlung,03.03.2025,"-12,34",Globus,,,,Globus Markthalle,Lebensmittel,Supermarkt
+Kartenzahlung,04.03.2025,"-45,67",Rewe,,,,REWE City,Lebensmittel,Supermarkt
+Kartenzahlung,10.03.2025,"-9,12",Aldi Süd,,,,ALDI SUED,Lebensmittel,Supermarkt
+Pocket-Umbuchung,15.03.2025,"-100,00",Sparen,,,,,Umbuchung,Umbuchung
+SEPA-Überweisung,16.03.2025,"-400,00",John Smith,DE12300222245000012345,DEFFFFFFFFF,,,Weitere Ausgaben,Weitere Ausgaben
+Kartenzahlung,20.03.2025,"-33,33",Kaufland,,,,KAUFLAND MyCity,Lebensmittel,Supermarkt
+Kartenzahlung,25.03.2025,"-29,29",Decathlon,,,,DECATHLON Deutschland,Shopping,Sport Shop
+Echtzeit-Überweisung,26.03.2025,"-500,00",Otto Mustermann,DE12340123460567666666,PAAAAAAFFFF,Monatsmiete 04/25,,Wohnen & Haushalt,Miete
+Kartenzahlung,28.03.2025,"-3,99",Heberer,,,,,Lebensmittel,Bäckerei
+Kartenzahlung,29.12.2025,"-55,55",MyCafe,,,,,Restaurant/ Café/ Bar,Restaurant/ Café/ Bar
+SEPA-Überweisung,30.03.2025,"6789,10",MyJob GmbH,DE12340000000001234567,DEDEDEABCDE,LOHN / GEHALT         03/25,,Einkommen,Lohn/ Gehalt
+Kartenzahlung,01.04.2025,"-100,99",Saturn,,,,SATURN ELECTRO-HANDELS,Shopping,Elektrohandel
+Kartenzahlung,05.04.2025,"-99,99",Globus,,,,Globus Markthalle,Lebensmittel,Supermarkt
+SEPA-Lastschrift,10.04.2025,"-40,98",Vodafone,DE12340000000001234567,DEDEDEABCDE,VODAFONE WEST GMBH,"Festnetz, Internet und TV"
+Kartenzahlung,15.04.2025,"-5,55",Le Crobag,,,,LE CROBAG GmbH & Co. K,Lebensmittel,Bäckerei
+Kartenzahlung,16.04.2025,"-10,10",Dirk Rossmann,,,,Rossmann,Shopping,Drogerie
+Kartenzahlung,20.04.2025,"-1,12",DANKE BAECKER DRIES,,,,,Lebensmittel,Bäckerei
+Kartenzahlung,22.04.2025,"-99,99",Aldi Süd,,,,ALDI SUED,Lebensmittel,Supermarkt
+SEPA-Lastschrift,23.04.2025,"-55,08",Rundfunkbeitrag,DE12340000000001234567,DEDEDEABCDE,Rundfunk 04.2025 - 06.2025,Rundfunk,Wohnen & Haushalt,Rundfunkgebühren
+Kartenzahlung,25.04.2025,"-50,50",Rewe,,,,REWE Sch,Lebensmittel,Supermarkt
+SEPA-Überweisung,26.04.2025,"50,00",Vattenfall,DE12340000000001234567,DEDEDEABCDE,S/1234 Strom Gutschrift,VATTENFALL EUROPE SALES,Energie,Strom
+SEPA-Lastschrift,27.04.2025,"-10,00",fraenk,DE12340000000001234567,DEDEDEABCDE,fraenk Rechnung 123,fraenk GmbH,DSL & Mobilfunk,Mobilfunk
+SEPA-Überweisung,30.04.2025,"6789,10",MyJob GmbH,DE12340000000001234567,DEDEDEABCDE,LOHN / GEHALT         04/25,,Einkommen,Lohn/ Gehalt
+Echtzeit-Überweisung,30.04.2025,"-500,00",Otto Mustermann,DE12340123460567666666,PAAAAAAFFFF,Monatsmiete 05/25,,Wohnen & Haushalt,Miete
+Kartenzahlung,01.05.2025,"-100,99",Aldi Süd,,,,ALDI SUED,Lebensmittel,Supermarkt
+Kartenzahlung,10.05.2025,"-200,20",OFFERL WOLLZEILE,,,,,Lebensmittel,Bäckerei
+Kartenzahlung,15.05.2025,"-150,12",Spar,,,,Interspar,Lebensmittel,Supermarkt
+Kartenzahlung,16.05.2025,"-12,34",Starbucks,,,,STARBUCKS,Restaurant/ Café/ Bar,Restaurant/ Café/ Bar
+Kartenzahlung,17.05.2025,"-99,99",IKEA,,,,IKEA WBH,Wohnen & Haushalt,Einrichtung & Haushaltswaren
+SEPA-Lastschrift,18.05.2025,"-46,00",Vattenfall,DE12340000000001234567,DEDEDEABCDE,S/123 Strom Abschlag,VATTENFALL EUROPE SALES,Energie,Strom
+Kartenzahlung,20.05.2025,"-90,99",Rewe,,,,REWE GM,Lebensmittel,Supermarkt
+SEPA-Lastschrift,23.05.2025,"-9,99",getsafe,DE12340000000001234567,GAAAAAA1,Getsafe,GC RE GETSAFE,Versicherungen,Sonstige Versicherung
+SEPA-Überweisung,28.05.2025,"6789,10",MyJob GmbH,DE12340000000001234567,DEDEDEABCDE,LOHN / GEHALT         05/25,,Einkommen,Lohn/ Gehalt
+Echtzeit-Überweisung,29.05.2025,"-500,00",Otto Mustermann,DE12340123460567666666,PAAAAAAFFFF,Monatsmiete 06/25,,Wohnen & Haushalt,Miete
+Kartenzahlung,31.05.2025,"-50,50",Rewe,,,,REWE,Lebensmittel,Supermarkt
+SEPA-Überweisung,01.06.2025,"30,00",Alex Black,DE12340123460567666666,PAAAAAAFFFF,,,Weitere Einnahmen,Weitere Einnahmen
+SEPA-Lastschrift,01.06.2025,"-58,00",Berliner BVG,DE12340123460567666666,PAAAAAAFFFF,"/RFB/1234, 01.06.2558,00Abo Sollstellung",Berliner Verkehrsbetriebe (BVG) Anstalt des oeffentlichen Rechts,Mobilität,Öffentlicher Nahverkehr
+Kartenzahlung,03.06.2025,"-100,13",Aldi Süd,,,,ALDI SUED,Lebensmittel,Supermarkt
+Kartenzahlung,06.06.2025,"-66,66",Dirk Rossmann,,,,Rossmann,Shopping,Drogerie
+Kartenzahlung,12.06.2025,"-19,55",Aldi Süd,,,,ALDI SUED,Lebensmittel,Supermarkt
+Kartenzahlung,15.06.2025,"-59,99",Rewe,,,,REWE Sch,Lebensmittel,Supermarkt
+Kartenzahlung,17.06.2025,"-25,00",HAIR SALON,,,,,Wellness & Beauty,Friseur
+SEPA-Lastschrift,18.06.2025,"-3,50",Stadt Scheisebach Stadtkasse,DE12340123460567666666,BADEDE11234,Parken 06.06.2025 11:20 FAD 12345,Stadtkasse Sheisebach,Mobilität,Sonstiges Mobilität
+Kartenzahlung,19.06.2025,"-9,99",DANKE BAECKER DRIES,,,,,Lebensmittel,Bäckerei
+SEPA-Überweisung,25.06.2025,"6789,10",MyJob GmbH,DE12340000000001234567,DEDEDEABCDE,LOHN / GEHALT         06/25,,Einkommen,Lohn/ Gehalt
+Echtzeit-Überweisung,26.06.2025,"-500,00",Otto Mustermann,DE12340123460567666666,PAAAAAAFFFF,Monatsmiete 07/25,,Wohnen & Haushalt,Miete
+Kartenzahlung,27.06.2025,"-100,99",Rewe,,,,REWE,Lebensmittel,Supermarkt
+SEPA-Lastschrift,27.06.2025,"-47,98",Vodafone,DE12340123460567666666,PAAAAAAFFFF,VODAFONE WEST GMBH,Vodafone West GmbH,DSL & Mobilfunk,"Festnetz, Internet und TV"
+Kartenzahlung,28.06.2025,"-123,45",Globus,,,,Globus Markthalle,Lebensmittel,Supermarkt
+SEPA-Überweisung,01.07.2025,"-450,00",Jake Johnson,DE12340123460567666666,PAAAAAAFFFF,,,Weitere Ausgaben,Weitere Ausgaben
+Kartenzahlung,02.07.2025,"-99,90",Kaufland,,,,KAUFLAND,Lebensmittel,Supermarkt
+Kartenzahlung,03.07.2025,"-6,66",Werners Backstube KG,,,,,Lebensmittel,Bäckerei
+SEPA-Lastschrift,05.07.2025,"-9,99",getsafe,DE12340123460567666666,PAAAAAAFFFF,Getsafe,GC RE GETSAFE,Versicherungen,Sonstige Versicherung
+SEPA-Überweisung,06.07.2025,"15,00",Alex Black,DE12340123460567666666,PAAAAAAFFFF,,,Weitere Einnahmen,Weitere Einnahmen

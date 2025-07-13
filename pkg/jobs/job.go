@@ -15,27 +15,26 @@ import (
 	"github.com/13excite/c24-expense/pkg/models"
 )
 
-type parser interface {
-	ParseFile(string) error
-}
+// type parser interface {
+// 	ParseFile(string) error
+// }
 
 // Job struct that holds the logger, parser and configuration of the job
 type Job struct {
 	logger *zap.SugaredLogger
-	parser parser
 	config *config.Config
 }
 
 // New returns a new Job struct
-func New(conf *config.Config, parser parser) *Job {
+func New(conf *config.Config) *Job {
 	return &Job{
 		config: conf,
 		logger: zap.S().With("package", "job"),
-		parser: parser,
 	}
 }
 
 func (j *Job) parserRunner() {
+	j.logger.Debug("Starting parserRunner at ", time.Now().Format(time.RFC3339))
 	// job runs not so often, so we can afford to create a new connection every time
 	conn, err := driver.OpenDB(j.config.Clickhouse.Username,
 		j.config.Clickhouse.Password, j.config.Clickhouse.Address, j.config.Clickhouse.Database)
@@ -73,7 +72,7 @@ func (j *Job) parserRunner() {
 
 // RunBackgroundParseJob runs the background job that parses the CSV files
 func (j *Job) RunBackgroundParseJob(ctx context.Context) error {
-	j.logger.Info("Background ParseFileJob is starting with run every", j.config.RunEvery)
+	j.logger.Info("Background ParseFileJob is starting with run every ", j.config.RunEvery, " minutes")
 
 	ticker := time.NewTicker(time.Duration(j.config.RunEvery) * time.Minute)
 
