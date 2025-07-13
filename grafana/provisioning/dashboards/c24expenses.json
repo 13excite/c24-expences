@@ -436,7 +436,7 @@
           },
           "pluginVersion": "4.5.1",
           "queryType": "timeseries",
-          "rawSql": "SELECT\n    toStartOfMonth(date) AS time,\n    primary_class,\n    abs(sum(amount)) AS total_expenses\nFROM\n    transactions\nWHERE\n    amount < 0 AND primary_class != 'Savings' AND\n    time >= toDate(parseDateTimeBestEffort('${__from:date}')) AND time <= toDate(parseDateTimeBestEffort('${__to:date}'))\nGROUP BY\n    time, primary_class\nORDER BY\n    time ASC;",
+          "rawSql": "SELECT\n    toStartOfMonth(date) AS time,\n    primary_class,\n    abs(sum(amount)) AS _\nFROM\n    transactions\nWHERE\n    amount < 0 AND primary_class != 'Savings' AND\n    time >= toDate(parseDateTimeBestEffort('${__from:date}')) AND time <= toDate(parseDateTimeBestEffort('${__to:date}'))\nGROUP BY\n    time, primary_class\nORDER BY\n    time ASC;",
           "refId": "A"
         }
       ],
