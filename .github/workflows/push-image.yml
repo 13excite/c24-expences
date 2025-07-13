@@ -1,10 +1,22 @@
 name: Release archive of binary
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "grafana/**"
+      - "clickhouse/**"
+      - "docker-compose.yml"
+      - "config.yaml.example"
   push:
+    branches:
+      - main
     # trigger release only by pushing a tag
-    tags:
-      - "v*"
+    # tags:
+    #   - "v*"
 
 jobs:
   lint:
@@ -41,4 +53,5 @@ jobs:
           name: excite13/c24-expences
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          dockerfile: Dockerfile
+          dockerfile: ./Dockerfile
+          workdir: .
