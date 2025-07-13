@@ -53,5 +53,4 @@ jobs:
           name: excite13/c24-expences
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          dockerfile: ./Dockerfile
-          workdir: .
+          dockerfile: ../../Dockerfile
