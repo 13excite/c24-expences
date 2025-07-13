@@ -54,18 +54,19 @@ services:
       - grafana
 
   c24-parser:
-    image: c24-expences:test
+    image: excite13/c24-expences:0.0.3
     container_name: c24-parser
     depends_on:
       clickhouse-server:
         condition: service_healthy
     restart: on-failure
     volumes:
-      - ./input:/input
+      #- ./input:/input ### PUT YOU DATA TO THE FOLDER AND UNCOMMENT THIS LINE
+      - ./testdata/transaction.csv.mock:/input/mock.csv # JUST FOR LOADING MOCK DATA
       - ./config.yaml:/etc/config.yaml
     command: sh -c "exec /usr/local/bin/c24-expences -config /etc/config.yaml"
     networks:
       - grafana
 
 networks:
-  grafana: 
+  grafana:
