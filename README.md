@@ -13,6 +13,7 @@ such as data processing, storage, and visualization.
 - [Overview](#overview)
 - [Components](#components)
 - [How to use](#how-to-use)
+- [Configuration](#configuration)
 - [C24 CSV export](#c24-csv-export)
 - [Parser management](#parser-management)
 
@@ -48,12 +49,28 @@ Usage:
   build-docker   builds the docker image
 ```
 
+## Configuration
+
+Configuration is managed through `yaml` file.
+
+The example configuration file is located in the
+[`config.yaml`](./config.yaml).
+
 ## C24 CSV export
 
 C24 provides a CSV export of transactions, documentation can be found
 [by the next link](https://hilfe.c24.de/hc/de/articles/8082169487250-Wie-kann-ich-meine-Transaktionen-exportieren).
 
-Example of the CSV file: [transaction.csv.mock](./testdata/transaction.csv.mock)
+Example of the CSV file: [transaction.csv.mock](./testdata/transaction.csv.mock).
+
+After downloading the CSV file, you need to save it to the `./input/` directory.
+Then edit volumes of the `c24-parse` container in the`docker-compose.yaml` and
+uncomment the string `#- ./input:/input`.
+
+After that, you can run the project with the `make run` command. The
+`c24-parse` container will parse the CSV file and store the data in the
+ClickHouse database. The parsed data will be shown in the Grafana dashboard by
+the link [http://localhost:3000](http://localhost:3000).
 
 ## Parser management
 
