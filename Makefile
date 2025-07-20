@@ -8,6 +8,7 @@ GRAFANA_CH_DS_URL="https://github.com/grafana/clickhouse-datasource/releases/dow
 
 # constant variables
 PROJECT_NAME	= c24-expences
+DEV_DOCKER_TAG = dev
 BINARY_NAME	= c24-expences
 GIT_COMMIT	= $(shell git rev-parse HEAD)
 BINARY_TAR_DIR	= $(BINARY_NAME)-$(GIT_COMMIT)
@@ -60,3 +61,19 @@ test:
 	@printf "$(OK_COLOR)==> Running tests$(NO_COLOR)\n"
 	@go test -v -count=1 -covermode=atomic -coverpkg=./... -coverprofile=coverage.txt ./...
 	@go tool cover -func coverage.txt
+
+
+## run: runs docker-compose with the project
+run:
+	@printf "$(OK_COLOR)==> Running docker-compose$(NO_COLOR)\n"
+	@docker-compose up -d
+
+## stop: stops docker-compose with the project
+stop:
+	@printf "$(OK_COLOR)==> Stopping docker-compose$(NO_COLOR)\n"
+	@docker-compose down
+
+## build-docker: builds the docker image
+build-docker:
+	@printf "$(OK_COLOR)==> Building docker image$(NO_COLOR)\n"
+	@docker build -t $(PROJECT_NAME):$(DEV_DOCKER_TAG) .
