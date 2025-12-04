@@ -42,34 +42,37 @@ func TestTranslateCategory(t *testing.T) {
 
 func TestTranslateSubcategory(t *testing.T) {
 	tests := []struct {
-		input    string
-		expected string
+		input      string
+		receipient string
+		expected   string
 	}{
-		{"Bäckerei", "Bakery"},
-		{"Drogerie", "Drugstore"},
-		{"Einrichtung & Haushaltswaren", "Household_goods"},
-		{"Elektrohandel", "Electronics_store"},
-		{"Festnetz, Internet und TV", "Internet_tv"},
-		{"Kapitalerträge", "Capital_income"},
-		{"Lohn/ Gehalt", "Salary"},
-		{"Miete", "Rent"},
-		{"Mobilfunk", "Mobile_phone"},
-		{"Restaurant/ Café/ Bar", "Restaurant_cafe"},
-		{"Rundfunkgebühren", "Broadcast_fees"},
-		{"Sonstige Versicherung", "Other_insurance"},
-		{"Sport Shop", "Sports_shop"},
-		{"Steuern und Abgaben", "Taxes_and_fees"},
-		{"Strom", "Electricity"},
-		{"Supermarkt", "Supermarket"}, // nolint:all
-		{"Umbuchung", "Saving"},
-		{"Weitere Ausgaben", "Other_expenses"},
-		{"Weitere Einnahmen", "Other_income"},
-		{"Öffentlicher Nahverkehr", "Public_transport"},
-		{"Unbekannte Unterkategorie", "unbekannte_unterkategorie"},
+		{"Bäckerei", "", "Bakery"},
+		{"Drogerie", "", "Drugstore"},
+		{"Einrichtung & Haushaltswaren", "", "Household_goods"},
+		{"Elektrohandel", "", "Electronics_store"},
+		{"Festnetz, Internet und TV", "", "Internet_tv"},
+		{"Kapitalerträge", "", "Capital_income"},
+		{"Lohn/ Gehalt", "", "Salary"},
+		{"Miete", "", "Rent"},
+		{"Mobilfunk", "", "Mobile_phone"},
+		{"Restaurant/ Café/ Bar", "", "Restaurant_cafe"},
+		{"Rundfunkgebühren", "", "Broadcast_fees"},
+		{"Sonstige Versicherung", "", "Other_insurance"},
+		{"Sport Shop", "", "Sports_shop"},
+		{"Steuern und Abgaben", "", "Taxes_and_fees"},
+		{"Strom", "", "Electricity"},
+		{"Supermarkt", "", "Supermarket"}, // nolint:all
+		{"Umbuchung", "", "Saving"},
+		{"Weitere Ausgaben", "", "Other"},
+		{"Weitere Einnahmen", "", "Other_income"},
+		{"Öffentlicher Nahverkehr", "", "Public_transport"},
+		{"Unbekannte Unterkategorie", "", "unbekannte_unterkategorie"},
+		{"Saving", "Haushalt", "Rent"},
+		{"Weitere Ausgaben", "HYUNDAI", "Mobility"},
 	}
 
 	for _, test := range tests {
-		result := translateSubcategory(test.input)
+		result := translateSubcategory(test.input, test.receipient)
 		assert.Equal(t, test.expected, result)
 	}
 }

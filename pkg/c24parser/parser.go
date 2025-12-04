@@ -37,6 +37,7 @@ func (p *Parser) readCSV(filename string) error {
 	// Read CSV content
 	p.csvReader = csv.NewReader(p.file)
 	p.csvReader.Comma = ','
+	p.csvReader.FieldsPerRecord = -1 // Allow variable number of fields
 	return nil
 }
 
@@ -61,7 +62,7 @@ func (p *Parser) ParseFile(filename string) error {
 			fmt.Printf("Error reading row: %v\n", err)
 			continue
 		}
-		amount, err := p.parseAmount(row[2])
+		amount, err := p.parseAmount(row[3])
 		if err != nil {
 			fmt.Printf("Error parsing amount: %v\n", err)
 			continue
@@ -74,9 +75,9 @@ func (p *Parser) ParseFile(filename string) error {
 		}
 		var recipient string
 		if row[0] == "SEPA-Überweisung" {
-			recipient = strings.Split(row[3], ",")[0]
+			recipient = strings.Split(row[4], ",")[0]
 		} else {
-			recipient = row[3]
+			recipient = row[4]
 		}
 
 		p.transactions = append(p.transactions, models.Transaction{
@@ -84,9 +85,9 @@ func (p *Parser) ParseFile(filename string) error {
 			Date:            date,
 			Amount:          amount,
 			Recipient:       recipient,
-			Usage:           row[6],
-			Category:        translateCategory(row[8], recipient),
-			Subcategory:     translateSubcategory(row[9]),
+			Usage:           row[7],
+			Category:        translateCategory(row[11], recipient),
+			Subcategory:     translateSubcategory(row[12], recipient),
 		})
 	}
 	return nil
@@ -134,6 +135,6 @@ func (p *Parser) translateTransactionType(germanType string) string {
 func (p *Parser) parseAmount(amountStr string) (float64, error) {
 	// Replace "," with "." and remove quotes
 	replacer := strings.NewReplacer(",", ".", "\"", "")
-	cleanAmount := replacer.Replace(amountStr)
+	cleanAmount := strings.Split(replacer.Replace(amountStr), " ")[0]
 	return strconv.ParseFloat(cleanAmount, 64)
 }

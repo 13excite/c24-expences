@@ -27,9 +27,15 @@ func translateCategory(germanCategory, recipient string) string {
 	case "Restaurant/ Café/ Bar":
 		return "Restaurant_Cafe"
 	case "Umbuchung":
+		// saving for household expenses
+		if strings.Contains(recipient, "Haushalt") {
+			return "Rent"
+		}
 		return "Savings"
 	case "Versicherungen":
 		return "Insurance"
+	case "Freizeit & Unterhaltung":
+		return advancedCategoriser(recipient)
 	// if category is "Weitere Ausgaben" categorise based on recipient
 	// to get more specific category
 	case "Weitere Ausgaben":
@@ -37,6 +43,9 @@ func translateCategory(germanCategory, recipient string) string {
 	case "Weitere Einnahmen":
 		return "Other_Income"
 	case "Wohnen & Haushalt":
+		if strings.Contains(recipient, "Norbert") {
+			return "Rent"
+		}
 		return "Housing"
 	case "Wellness & Beauty":
 		return "Beauty"
@@ -50,6 +59,9 @@ func translateCategory(germanCategory, recipient string) string {
 func advancedCategoriser(recipient string) string {
 	if strings.Contains(recipient, "Espresso House") {
 		return "Restaurant_Cafe"
+	}
+	if strings.Contains(recipient, "reisen_urlaub") {
+		return "Travel_Vacation"
 	}
 	if strings.Contains(recipient, "GITHUB") {
 		return "Work"
@@ -66,15 +78,58 @@ func advancedCategoriser(recipient string) string {
 	if strings.Contains(recipient, "JUICE FACTORY") {
 		return "Restaurant_Cafe"
 	}
+	if strings.Contains(recipient, "HYUNDAI") || strings.Contains(recipient, "Hyundai") {
+		return "Mobility"
+	}
+	if strings.Contains(recipient, "Anastasiia") || strings.Contains(recipient, "ANASTASIIA") {
+		return "Nastya"
+	}
 	if strings.Contains(recipient, "SIHOO") {
 		return "Housing"
+	}
+	if strings.Contains(recipient, "Herzensbackere") {
+		return "Restaurant_Cafe"
+	}
+	if strings.Contains(recipient, "OVHcloud") {
+		return "Housing"
+	}
+	if strings.Contains(recipient, "DOMKELLER") {
+		return "Restaurant_Cafe"
+	}
+	if strings.Contains(recipient, "WEINBAUER") {
+		return "Travel_Vacation"
+	}
+	if strings.Contains(recipient, "Vinothek") {
+		return "Restaurant_Cafe"
+	}
+	if strings.Contains(recipient, "DATART") {
+		return "Housing"
+	}
+	if strings.Contains(recipient, "METZGEREI") {
+		return "Groceries"
+	}
+	if strings.Contains(recipient, "Richter Erz") {
+		return "Groceries"
+	}
+	if strings.Contains(recipient, "Solntcev") || strings.Contains(recipient, "Haushalt") {
+		return "Rent"
+	}
+	if strings.Contains(recipient, "Norbert") {
+		return "Rent"
+	}
+	if strings.Contains(recipient, "KLIVER") {
+		return "Groceries"
 	}
 	return "Other"
 }
 
 // translateSubcategory translates the German subcategory to English and converts to snake_case
-func translateSubcategory(germanSubcategory string) string {
+func translateSubcategory(germanSubcategory, recipient string) string {
 	// TODO: Improve parsing of subcategories
+	if germanSubcategory == "Weitere Ausgaben" || germanSubcategory == "Saving" {
+		return advancedCategoriser(recipient)
+	}
+
 	translationMap := map[string]string{
 		"Bäckerei":                     "Bakery",
 		"Drogerie":                     "Drugstore",
@@ -93,7 +148,6 @@ func translateSubcategory(germanSubcategory string) string {
 		"Strom":                        "Electricity",
 		"Supermarkt":                   "Supermarket", // nolint:all
 		"Umbuchung":                    "Saving",
-		"Weitere Ausgaben":             "Other_expenses",
 		"Weitere Einnahmen":            "Other_income",
 		"Öffentlicher Nahverkehr":      "Public_transport",
 		"friseur":                      "Haircut",
@@ -102,6 +156,7 @@ func translateSubcategory(germanSubcategory string) string {
 		"Bonus Energievertrag":         "Energy_bonus",
 		"Getränkehandel":               "Supermarket",
 		"Heimwerken & Garten":          "Building_garden",
+		"hotel_urlaubswohnungen":       "Hotel_vacation",
 	}
 
 	if translation, exists := translationMap[germanSubcategory]; exists {
